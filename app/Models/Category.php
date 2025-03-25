@@ -5,30 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Posts extends Model
+class Category extends Model
 {
     use HasFactory;
-
-    protected $table = 'posts';
-
+    protected $table = 'categories';
     protected $fillable = [
         'title',
-        'description',
-        'image',
-        'category_id',
-        'created_by',
         'status',
+        'created_by'
     ];
 
-    // Relationship with User (creator)
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    // Relationship with Category
-    public function category()
+    public function posts()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->hasMany(Posts::class, 'category_id');
     }
 }
